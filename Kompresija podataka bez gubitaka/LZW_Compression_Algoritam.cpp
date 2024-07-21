@@ -3,47 +3,57 @@
 #include <vector>
 #include <string.h>
 using namespace std;
-vector<int> encoding(string s1)
-{
-	cout << "Encoding\n";
-	unordered_map<string, int> table;
-	//Popunjavanje default dela tabele ASCII karakterima od 0 do 255
+// Popunjavanje default dela tabele ASCII karakterima od 0 do 255
+unordered_map<string, int> setDefault() {
+	unordered_map<string, int> tabela;
 	for (int i = 0; i <= 255; i++) {
 		string ch = "";
-		ch += char(i);
-		table[ch] = i;
+		ch += (char)i;
+		tabela[ch] = i;
 	}
+	return tabela;
+}
+vector<int> encoding(string ulazni_niz_karaktera)
+{
+	cout << "Kodiranje poruke: "<<ulazni_niz_karaktera<<endl;
+	unordered_map<string, int> tabela = setDefault();
 
-	string p = "", c = "";
-	//p dobija vrednost prvog karaktera
-	p += s1[0];
+	string trenutni_slog = "";
+	string trenutni_karakter = "";
+
+	//trenutni_slog dobija vrednost prvog karaktera ulaznog niza
+	trenutni_slog += ulazni_niz_karaktera[0];
 	int code = 256;
-	vector<int> output_code;
+	vector<int> kodirani_niz;
 	cout << "String\tOutput_Code\tAddition\n";
 
-	for (int i = 0; i < s1.length(); i++) {
-		if (i != s1.length() - 1)
-			c += s1[i + 1];
-		//Pokusava da nadje niz karaktera u tabeli "table" koji je jednak 
-		//nizu koji se dobije nadovezivanjem trenutnog karaktera "c", iz ulaznog niza "s1", na niz karaktera "p" 
-		if (table.find(p + c) != table.end()) {
-			//Niz karaktera p+c postoji u tabeli "table" i onda se nizu "p" nadovezuje trenutni karakter "c"
-			p = p + c;
+	for (int i = 0; i < ulazni_niz_karaktera.length(); i++) {
+		if (i != ulazni_niz_karaktera.length() - 1)
+			trenutni_karakter += ulazni_niz_karaktera[i + 1];
+		else
+			break;
+
+		//Pokusava da nadje niz karaktera u tabeli, koji je jednak 
+		//nizu dobijenom nadovezivanjem trenutni_karakter , iz ulaznog niza "ulazni_niz_karaktera", na niz trenutni_slog 
+		if (tabela.find(trenutni_slog + trenutni_karakter) != tabela.end()) {
+			//Niz karaktera trenutni_slog + trenutni_karakter se NALAZI u tabeli
+			// pa se nizu trenutni_slog nadovezuje trenutni_karakter
+			trenutni_slog = trenutni_slog + trenutni_karakter;		
 		}
 		else {
-			cout << p << "\t" << table[p] << "\t\t"
-				<< p + c << "\t" << code << endl;
-			//Niz p+c se ne nalazi u tabeli "table" pa se vrsi njegovo dodavanje 
-			output_code.push_back(table[p]);
-			table[p + c] = code;
+			cout << trenutni_slog << "\t" << tabela[trenutni_slog] << "\t\t"
+				<< trenutni_slog + trenutni_karakter << "\t" << code << endl;
+			//Niz trenutni_slog + trenutni_karakter se NE nalazi u tabeli pa se vrsi njegovo dodavanje 
+			kodirani_niz.push_back(tabela[trenutni_slog]);
+			tabela[trenutni_slog + trenutni_karakter] = code;
 			code++;
-			p = c;
+			trenutni_slog = trenutni_karakter;
 		}
-		c = "";
+		trenutni_karakter = "";
 	}
-	cout << p << "\t" << table[p] << endl;
-	output_code.push_back(table[p]);
-	return output_code;
+	cout << trenutni_slog << "\t" << tabela[trenutni_slog] << endl;
+	kodirani_niz.push_back(tabela[trenutni_slog]);
+	return kodirani_niz;
 }
 
 void decoding(vector<int> op)
