@@ -1,0 +1,37 @@
+Ovaj vizualizator sam preuzeo sa adrese: https://kubokovac.eu/gt.jar
+*Iz nekog razloga nece da radi na drugim particijama osim na C particiji
+
+Strukture podataka koje prikazuje su:
+Dictionaries:
+	- Binary search tree
+	-Rotations
+	- AVL tree
+	- 2-3 tree
+	- 2-3-4 tree
+	- B tree
+	- B+ tree
+	- Red-black tree
+	- AA tree
+	- Treap
+	- Skiplist
+	- Scapegoat tree
+	- Splay tree
+Priority q-ueues:
+	- Heap
+	- d-ary heap
+Meldable priority queues:
+	- Leflist heap
+	- Skew heap
+	- Pairing heap
+	- Binomal heap
+	- Lazy binomial heap
+	- Fibonacci heap
+Union find:
+	- Union find
+Stringology:
+	- Trie
+	- Suffix tree
+Interval trees:
+	- Interval tree
+Dynamic array:
+	- Dynamic array
